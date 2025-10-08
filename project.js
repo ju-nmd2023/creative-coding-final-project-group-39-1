@@ -1,7 +1,13 @@
+let particleSystem;
+let flow;
+
 function setup() {
     createCanvas(800, 500);
     noStroke();
     background(10, 15, 35);
+
+    flow = new FlowField();
+    particleSystem = new ParticleSystem();
 }
 
 function draw() {
@@ -11,6 +17,24 @@ function draw() {
 
 class FlowField {
     constructar (scale) {
+        this.scale = scale;
+        this.cols = ceil(width / this.scale);
+        this.rows = ceil(height / this.scale);
 
+    }
+}
+
+class Particle {
+    constructor(x, y, hue) {
+
+    }
+}
+
+class ParticleSystem {
+    constructor(num) {
+this.particles = [];
+for (let i = 0; i < num; i++) {
+    this.particles.push(new Particle(random(width), random(height), random(160, 220)));
+}
     }
 }
