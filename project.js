@@ -1,21 +1,25 @@
 let particleSystem;
 let flow;
+let hueShift = 0;
 
 function setup() {
     createCanvas(800, 500);
+    colorMode(HSB, 360, 100, 100, 100);
     noStroke();
-    background(10, 15, 35);
+    background(230, 60, 15);
 
-    flow = new FlowField();
+    flow = new FlowField(20);
     particleSystem = new ParticleSystem(300);
 }
 
 function draw() {
-    fill(10, 15, 35, 20);
+    fill(230, 60, 15, 20);
     rect(0, 0, width, height); // chatGPT helped me here because I could not see the background, https://chatgpt.com/c/68e6249a-2114-8332-a5a1-32b0c14cffdd
 
+    hueShift = (hueShift + 0.3) % 360;
+
     flow.update(); // got some help here by ChatGPT, https://chatgpt.com/c/68ecbc49-aba8-8327-9aa0-d597893e670b
-    particleSystem.run(flow); 
+    particleSystem.run(flow, hueShift); 
 }
 
 
@@ -93,7 +97,8 @@ class Particle {
     show() {
         push();
         blendMode(ADD);
-        fill(this.hue, 80, 100, this.alpha);
+        let currentHue = (this.baseHue + hueShift) % 360;
+        fill(currentHue, 80, 100, this.alpha);
         ellipse(this.pos.x, this.pos.y, this.size);
         pop();
     }
@@ -107,12 +112,12 @@ for (let i = 0; i < num; i++) {
 }
     }
 
-   run(flow) {
-    this.hueShift += 0.3;
+   run(flow, hueShift) {
     for (let p of this.particles) {
         p.follow(flow);
         p.update();
         p.show();
     }
    }
+
 }
