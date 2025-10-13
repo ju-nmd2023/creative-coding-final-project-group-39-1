@@ -1,25 +1,22 @@
 let particleSystem;
 let flow;
-let hueShift = 0;
 
 function setup() {
     createCanvas(800, 500);
-    colorMode(HSB, 360, 100, 100, 100);
+    colorMode(HSB, 360, 100, 100, 100); // got help with chatgpt here because I missied this line, 
     noStroke();
     background(230, 60, 15);
 
-    flow = new FlowField(20);
-    particleSystem = new ParticleSystem(300);
+    flow = new FlowField(30);
+    particleSystem = new ParticleSystem(1800);
 }
 
 function draw() {
     fill(230, 60, 15, 20);
     rect(0, 0, width, height); // chatGPT helped me here because I could not see the background, https://chatgpt.com/c/68e6249a-2114-8332-a5a1-32b0c14cffdd
 
-    hueShift = (hueShift + 0.3) % 360;
-
     flow.update(); // got some help here by ChatGPT, https://chatgpt.com/c/68ecbc49-aba8-8327-9aa0-d597893e670b
-    particleSystem.run(flow, hueShift); 
+    particleSystem.run(flow); 
 }
 
 
@@ -70,8 +67,8 @@ class Particle {
     }
 
     follow(flow) { // here chatgpt helped me fix the error, https://chatgpt.com/c/68ecbc49-aba8-8327-9aa0-d597893e670b
-        let desired = flow.lookup(this.pos);
-        this.applyForce(desired);
+        let force = flow.lookup(this.pos);
+        this.applyForce(force.mult(0.3));
     }
 
     applyForce(force) {
@@ -97,8 +94,7 @@ class Particle {
     show() {
         push();
         blendMode(ADD);
-        let currentHue = (this.baseHue + hueShift) % 360;
-        fill(currentHue, 80, 100, this.alpha);
+        fill(this.hue, 80, 100, this.alpha);
         ellipse(this.pos.x, this.pos.y, this.size);
         pop();
     }
@@ -110,11 +106,14 @@ this.particles = [];
 for (let i = 0; i < num; i++) {
     this.particles.push(new Particle(random(width), random(height), random(160, 220)));
 }
+this.hueShift = 0;
     }
 
-   run(flow, hueShift) {
+   run(flow) { //chatgpt helped me finished the color shift, https://chatgpt.com/c/68ecc0b5-f6d4-832b-b6a9-8717d56c2d85
+    this.hueShift += 0.3;
     for (let p of this.particles) {
         p.follow(flow);
+        p.hue = (p.hue + this.hueShift * 0.002) % 360;
         p.update();
         p.show();
     }
