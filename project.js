@@ -118,5 +118,4 @@ this.hueShift = 0;
         p.show();
     }
    }
-
 }
