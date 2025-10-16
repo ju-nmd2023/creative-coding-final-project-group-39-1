@@ -8,7 +8,7 @@ function setup() {
     background(230, 60, 15);
 
     flow = new FlowField(30);
-    particleSystem = new ParticleSystem(1800);
+    particleSystem = new ParticleSystem(2500);
 }
 
 function draw() {
@@ -39,7 +39,6 @@ update() {
             let index = x + y * this.cols;
             let angle = noise(xoff, yoff, this.zoff) * TWO_PI * 2;
             let v = p5.Vector.fromAngle(angle);
-            v.setMag(1);
             this.field[index] = v;
             xoff += this.inc;
         }
