@@ -12,7 +12,7 @@ function setup() {
 }
 
 function draw() {
-    fill(230, 60, 15, 20);
+    fill(260, 60, 15, 5);
     rect(0, 0, width, height); // chatGPT helped me here because I could not see the background, https://chatgpt.com/c/68e6249a-2114-8332-a5a1-32b0c14cffdd
 
     flow.update(); // got some help here by ChatGPT, https://chatgpt.com/c/68ecbc49-aba8-8327-9aa0-d597893e670b
@@ -61,8 +61,8 @@ class Particle {
         this.vel = createVector(0, 0);
         this.acc = createVector(0, 0);
         this.hue = hue;
-        this.alpha = random(60, 100);
-        this.size = random(1, 3);
+        this.alpha = random(80, 120);
+        this.size = random(2, 4);
     }
 
     follow(flow) { // here chatgpt helped me fix the error, https://chatgpt.com/c/68ecbc49-aba8-8327-9aa0-d597893e670b
@@ -92,7 +92,7 @@ class Particle {
 
     show() {
         push();
-        blendMode(ADD);
+        blendMode(SCREEN); // Here I got some help by chatGPT, https://chatgpt.com/c/68f09532-affc-832a-ab9b-9cd9eeecb944
         fill(this.hue, 80, 100, this.alpha);
         ellipse(this.pos.x, this.pos.y, this.size);
         pop();
