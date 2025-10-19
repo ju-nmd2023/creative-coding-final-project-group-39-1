@@ -13,7 +13,7 @@ function setup() {
 
 function draw() {
     fill(260, 60, 15, 5);
-    rect(0, 0, width, height); // chatGPT helped me here because I could not see the background, https://chatgpt.com/c/68e6249a-2114-8332-a5a1-32b0c14cffdd
+    rect(0, 0, width, height); 
 
     flow.update(); // got some help here by ChatGPT, https://chatgpt.com/c/68ecbc49-aba8-8327-9aa0-d597893e670b
     particleSystem.run(flow); 
@@ -118,3 +118,4 @@ this.hueShift = 0;
     }
    }
 }
+
